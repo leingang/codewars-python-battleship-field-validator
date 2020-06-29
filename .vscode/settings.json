@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/Users/matthew/.local/share/virtualenvs/codewars/bin/python"
+    "python.pythonPath": "/Users/matthew/.local/share/virtualenvs/codewars/bin/python",
+    "python.linting.flake8Path": "/Users/matthew/.local/share/virtualenvs/codewars/bin/flake8"
 }
