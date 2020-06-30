@@ -2,18 +2,10 @@
 
 from collections import Counter
 from logging import DEBUG
-import math
 
 from utils import add_logger, get_logger
 logger = get_logger(__name__)
-logger.setLevel(DEBUG)
-
-def prod(iter,start=1):
-    """Calculate the product of all the elements in the input iterable. 
-    The default start value for the product is 1."""
-    for x in iter:
-        start *= x
-    return start
+# logger.setLevel(DEBUG)
 
 def ships_touch(field):
     """Check if the ships in *field* touch each other
@@ -43,13 +35,13 @@ def validate_battlefield(field):
     if ships_touch(field): return False
     # that's the easy part
 
-    ships_to_find = Counter({4:1, 3:2, 2:3, 1:4})# length:count
+    ships_to_find = {4:1, 3:2, 2:3, 1:4}# length:count
     m, n = len(field), len(field[0])
     for d in sorted(ships_to_find.keys(),reverse=True):
         # look for a string of d consecutive 1's
         # horizontally
         for i in range(m):
-            for j in range(n-d):
+            for j in range(n-d+1):
                 if all(field[i][j+x] == 1 for x in range(d)):
                     logger.debug("Found a horizontal ship of length {d} at position[{i}][{j}]".format(d=d,i=i,j=j))
                     ships_to_find[d] -= 1
@@ -58,7 +50,7 @@ def validate_battlefield(field):
                         field[i][j+x] = 0
         # now vertically                        
         for j in range(n):
-            for i in range(m-d):
+            for i in range(m-d+1):
                 if all(field[i+x][j] == 1 for x in range(d)):
                     logger.debug("Found a vertical ship of length {d} at position[{i}][{j}]".format(d=d,i=i,j=j))
                     ships_to_find[d] -= 1
